@@ -15,6 +15,8 @@ jobs:
             sudo mkdir -p /opt/toolchains
             sudo tar -xjf gcc-linaro-aarch64-none-elf-4.8-2013.11_linux.tar.bz2 -C /opt/toolchains
             sudo tar -xjf gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2 -C /opt/toolchains
+          gitusername: {{ secrets.gitusername }}
+          gitemail: {{ secrets.gitemail }}
       - name: Install Linux kernel cross-compiler
         uses: sousmangoosta/android_build_docker_image@master
         with:
@@ -24,6 +26,8 @@ jobs:
             sudo mkdir -p /opt/toolchains
             sudo tar xvJf gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf.tar.xz -C /opt/toolchains
             sudo tar xvJf gcc-linaro-6.3.1-2017.02-x86_64_aarch64-linux-gnu.tar.xz -C /opt/toolchains
+          gitusername: { { secrets.gitusername } }
+          gitemail: { { secrets.gitemail } }
       - name: Install git-lfs
         uses: sousmangoosta/android_build_docker_image@master
         with:
@@ -35,6 +39,8 @@ jobs:
             cd git-lfs-2.3.4
             sudo ./install.sh
             git lfs install
+          gitusername: { { secrets.gitusername } }
+          gitemail: { { secrets.gitemail } }
       - name: Download Source Code
         uses: sousmangoosta/android_build_docker_image@master
         with:
@@ -43,6 +49,8 @@ jobs:
             cd $GITHUB_WORKSPACE/android
             repo init -u https://github.com/khadas/android_manifest.git -b khadas-vims-pie
             repo sync -j4 -c --no-clone-bundle
+          gitusername: { { secrets.gitusername } }
+          gitemail: { { secrets.gitemail } }
       - name: Build U-Boot
         uses: sousmangoosta/android_build_docker_image@master
         with:
@@ -50,6 +58,8 @@ jobs:
             cd $GITHUB_WORKSPACE/android
             cd bootloader/uboot
             ./mk kvim
+          gitusername: { { secrets.gitusername } }
+          gitemail: { { secrets.gitemail } }
       - name: Build Android
         uses: sousmangoosta/android_build_docker_image@master
         with:
@@ -58,6 +68,8 @@ jobs:
             source build/envsetup.sh
             lunch kvim-userdebug
             make -j4 otapackage
+          gitusername: { { secrets.gitusername } }
+          gitemail: { { secrets.gitemail } }
       - name: Upload U-Boot artifacts
         uses: actions/upload-artifact@v2
         with:
