@@ -11,7 +11,7 @@ jobs:
         with:
           cmd: mkdir -p $GITHUB_WORKSPACE/android &&
             cd $GITHUB_WORKSPACE/android &&
-            repo init -u https://github.com/khadas/android_manifest.git -b khadas-vims-pie --depth=1 --partial-clone --clone-filter=blob:limit=10M &&
+            repo init -u https://github.com/sousmangoosta/khadas_android_manifest.git -b khadas-vims-pie --depth=1 --partial-clone --clone-filter=blob:limit=10M &&
             repo sync -j$(nproc --all) -c --no-clone-bundle --no-tags
           gitusername: ${{ secrets.gitusername }}
           gitemail: ${{ secrets.gitemail }}
