@@ -26,7 +26,8 @@ jobs:
       - name: Build Android
         uses: sousmangoosta/android_build_docker_image@master
         with:
-          cmd: cd $GITHUB_WORKSPACE/android &&
+          cmd: PATH=$PATH:$GITHUB_WORKSPACE/android/bootloader/uboot/build/tools &&
+            cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
             lunch kvim-userdebug &&
             make -j$(nproc --all) otapackage
