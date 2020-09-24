@@ -29,7 +29,7 @@ jobs:
           cmd: cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
             lunch kvim-userdebug &&
-            make -j4 otapackage
+            make -j$(nproc --all) otapackage
           gitusername: ${{ secrets.gitusername }}
           gitemail: ${{ secrets.gitemail }}
       - name: Upload U-Boot artifacts
