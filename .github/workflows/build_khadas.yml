@@ -38,10 +38,10 @@ jobs:
         with:
           name: U-Boot
           path: |
-            $GITHUB_WORKSPACE/android/bootloader/uboot/build/u-boot.bin
-            $GITHUB_WORKSPACE/android/bootloader/uboot/build/u-boot.bin.sd.bin
+            android/bootloader/uboot/build/u-boot.bin
+            android/bootloader/uboot/build/u-boot.bin.sd.bin
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Android
-          path: $GITHUB_WORKSPACE/android/out/target/product/kvim/update.img
+          path: android/out/target/product/kvim/update.img
