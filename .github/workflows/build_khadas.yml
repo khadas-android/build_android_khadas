@@ -29,6 +29,7 @@ jobs:
           cmd: PATH=$PATH:$GITHUB_WORKSPACE/android/bootloader/uboot/build/tools &&
             cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
+            export BOARD_COMPILE_ATV=true &&
             lunch kvim-userdebug &&
             make -j$(nproc --all) otapackage
           gitusername: ${{ secrets.gitusername }}
