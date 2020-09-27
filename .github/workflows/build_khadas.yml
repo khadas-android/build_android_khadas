@@ -12,7 +12,7 @@ jobs:
           cmd: mkdir -p $GITHUB_WORKSPACE/android &&
             cd $GITHUB_WORKSPACE/android &&
             repo init -u https://github.com/sousmangoosta/khadas_android_manifest.git -b khadas-vims-pie --depth=1 --partial-clone --clone-filter=blob:limit=10M &&
-            repo sync -j$(nproc --all) -c --no-clone-bundle --no-tags
+            repo sync -j$(nproc --all) -c --no-clone-bundle --no-tags -v
           gitusername: ${{ secrets.gitusername }}
           gitemail: ${{ secrets.gitemail }}
       - name: Build U-Boot
@@ -26,7 +26,10 @@ jobs:
       - name: Build Android
         uses: sousmangoosta/android_build_docker_image@master
         with:
-          cmd: PATH=$PATH:$GITHUB_WORKSPACE/android/bootloader/uboot/build/tools &&
+          cmd: echo "[user]\n\
+            name = ${{ secrets.gitusername }}\n\
+            email = ${{ secrets.gitemail }}" > /home/$username/.gitconfig &&
+            PATH=$PATH:$GITHUB_WORKSPACE/android/bootloader/uboot/build/tools &&
             cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
             export BOARD_COMPILE_ATV=true &&
