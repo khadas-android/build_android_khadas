@@ -26,9 +26,8 @@ jobs:
       - name: Build Android
         uses: sousmangoosta/android_build_docker_image@master
         with:
-          cmd: echo "[user]\n\
-            name = ${{ secrets.gitusername }}\n\
-            email = ${{ secrets.gitemail }}" > /home/$username/.gitconfig &&
+          cmd: echo -e "[user]\nname = ${{ secrets.gitusername }}\nemail = ${{ secrets.gitemail }}"
+            > /home/android/.gitconfig &&
             PATH=$PATH:$GITHUB_WORKSPACE/android/bootloader/uboot/build/tools &&
             cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
