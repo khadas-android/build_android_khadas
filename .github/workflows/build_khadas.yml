@@ -13,16 +13,12 @@ jobs:
             cd $GITHUB_WORKSPACE/android &&
             repo init -u https://github.com/sousmangoosta/khadas_android_manifest.git -b khadas-vims-pie --depth=1 --partial-clone --clone-filter=blob:limit=10M &&
             repo sync -j$(nproc --all) -c --no-clone-bundle --no-tags -v
-          gitusername: ${{ secrets.gitusername }}
-          gitemail: ${{ secrets.gitemail }}
       - name: Build U-Boot
         uses: sousmangoosta/android_build_docker_image@master
         with:
           cmd: cd $GITHUB_WORKSPACE/android &&
             cd bootloader/uboot &&
             ./mk kvim
-          gitusername: ${{ secrets.gitusername }}
-          gitemail: ${{ secrets.gitemail }}
       - name: Build Android
         uses: sousmangoosta/android_build_docker_image@master
         with:
@@ -34,8 +30,6 @@ jobs:
             export BOARD_COMPILE_ATV=true &&
             lunch kvim-userdebug &&
             make -j$(nproc --all) otapackage
-          gitusername: ${{ secrets.gitusername }}
-          gitemail: ${{ secrets.gitemail }}
       - name: Upload U-Boot artifacts
         uses: actions/upload-artifact@v2
         with:
