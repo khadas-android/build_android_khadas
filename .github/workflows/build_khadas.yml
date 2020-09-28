@@ -28,6 +28,7 @@ jobs:
             cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
             export BOARD_COMPILE_ATV=true &&
+            export TARGET_BUILD_LIVETV=true &&
             lunch kvim-userdebug &&
             make -j$(nproc --all) otapackage
       - name: Upload U-Boot artifacts
