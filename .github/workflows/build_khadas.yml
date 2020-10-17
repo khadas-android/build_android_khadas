@@ -11,6 +11,8 @@ jobs:
         with:
           cmd: mkdir -p $GITHUB_WORKSPACE/android &&
             cd $GITHUB_WORKSPACE/android &&
+            echo -e "[user]\nname = ${{ secrets.gitusername }}\nemail = ${{ secrets.gitemail }}"
+            > /root/.gitconfig &&
             repo init -u https://github.com/sousmangoosta/khadas_android_manifest.git -b khadas-vims-pie --depth=1 --partial-clone --clone-filter=blob:limit=10M &&
             repo sync -j$(nproc --all) -c --no-clone-bundle --no-tags -v
       - name: Build U-Boot
@@ -23,13 +25,11 @@ jobs:
         uses: sousmangoosta/android_build_docker_image@master
         with:
           cmd: echo -e "[user]\nname = ${{ secrets.gitusername }}\nemail = ${{ secrets.gitemail }}"
-            > /home/android/.gitconfig &&
+            > /root/.gitconfig &&
             PATH=$PATH:$GITHUB_WORKSPACE/android/bootloader/uboot/build/tools &&
             cd $GITHUB_WORKSPACE/android &&
             source build/envsetup.sh &&
-            export BOARD_COMPILE_ATV=true &&
-            export TARGET_BUILD_LIVETV=true &&
-            lunch kvim-userdebug &&
+            lunch kvim_atv-userdebug &&
             make -j$(nproc --all) otapackage
       - name: Upload U-Boot artifacts
         uses: actions/upload-artifact@v2
